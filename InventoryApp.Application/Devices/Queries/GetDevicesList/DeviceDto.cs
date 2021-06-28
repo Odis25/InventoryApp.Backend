@@ -21,7 +21,7 @@ namespace InventoryApp.Application.Devices.Queries.GetDevicesList
                 .ForMember(dest => dest.Type,
                 opt => opt.MapFrom(src => src.Type.Name))
                 .ForMember(dest => dest.CurrentUser,
-                opt => opt.MapFrom(src => src.Checkouts.FirstOrDefault(checkout => checkout.CheckedOut == null)));
+                opt => opt.MapFrom(src => src.Checkouts.FirstOrDefault(checkout => checkout.CheckedOut == null).Employee));
         }
     }
 }

@@ -7,8 +7,8 @@ namespace InventoryApp.Application.Common.Mappings
 {
     public class AssembleyMappingProfile : Profile
     {
-        public AssembleyMappingProfile(Assembly assembly) =>
-            ApplyMappingsFromConfiguration(assembly);
+        public AssembleyMappingProfile() =>
+            ApplyMappingsFromConfiguration(Assembly.GetExecutingAssembly());
 
         private void ApplyMappingsFromConfiguration(Assembly assembly)
         {

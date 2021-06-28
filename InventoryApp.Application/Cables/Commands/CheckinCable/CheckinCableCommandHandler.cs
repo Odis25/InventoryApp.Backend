@@ -6,32 +6,35 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace InventoryApp.Application.Checkouts.Commands.CheckinDevice
+namespace InventoryApp.Application.Cables.Commands.CheckinCable
 {
-    public class CheckinDeviceCommandHandler : IRequestHandler<CheckinDeviceCommand, long>
+    public class CheckinCableCommandHandler
+        : IRequestHandler<CheckinCableCommand, long>
     {
         private readonly IAppDbContext _dbContext;
 
-        public CheckinDeviceCommandHandler(IAppDbContext dbContext) =>
+        public CheckinCableCommandHandler(IAppDbContext dbContext) =>
             _dbContext = dbContext;
 
-        public async Task<long> Handle(CheckinDeviceCommand request, CancellationToken cancellationToken)
+        public async Task<long> Handle(CheckinCableCommand request, CancellationToken cancellationToken)
         {
-            var device = await _dbContext.Devices.FindAsync(request.DeviceId, cancellationToken);
+            var cable = await _dbContext.Cables.FindAsync(request.CableId, cancellationToken);
+
+            if (cable == null)
+            {
+                throw new NotFoundException(nameof(Device), request.CableId);
+            }
+
             var employee = await _dbContext.Employees.FindAsync(request.EmployeeId, cancellationToken);
 
-            if (device == null)
-            {
-                throw new NotFoundException(nameof(Device), request.DeviceId);
-            }
-            else if (employee == null)
+            if (employee == null)
             {
                 throw new NotFoundException(nameof(Employee), request.EmployeeId);
             }
 
             var checkout = new Checkout
             {
-                Item = device,
+                Item = cable,
                 Employee = employee,
                 CheckedIn = DateTime.Now
             };

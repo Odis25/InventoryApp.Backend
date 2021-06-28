@@ -1,22 +1,22 @@
 ﻿using InventoryApp.Application.Common.Exceptions;
+using InventoryApp.Application.Devices.Commands.CheckoutDevice;
 using InventoryApp.Application.Interfaces;
 using InventoryApp.Domain;
 using InventoryApp.Domain.Enums;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace InventoryApp.Application.Devices.Commands.DeleteDevice
 {
-    public class DeleteDeviceCommandHandler : IRequestHandler<DeleteDeviceCommand>
+    public class DeleteDeviceCommandHandler 
+        : IRequestHandler<DeleteDeviceCommand>
     {
         private readonly IAppDbContext _dbContext;
+        private readonly IMediator _mediator;
 
-        public DeleteDeviceCommandHandler(IAppDbContext dbContext) =>
-            _dbContext = dbContext;
+        public DeleteDeviceCommandHandler(IAppDbContext dbContext, IMediator mediator) =>
+            (_dbContext, _mediator) = (dbContext, mediator);
 
         public async Task<Unit> Handle(DeleteDeviceCommand request, CancellationToken cancellationToken)
         {
@@ -27,15 +27,7 @@ namespace InventoryApp.Application.Devices.Commands.DeleteDevice
                 throw new NotFoundException(nameof(Device), request.Id);
             }
 
-            var checkouts = await _dbContext.Checkouts
-                .Where(checkout => checkout.Item == device
-                && checkout.CheckedOut == null)
-                .ToListAsync();
-
-            foreach (var checkout in checkouts)
-            {
-                checkout.CheckedOut = DateTime.Now;
-            }
+            await _mediator.Send(new CheckoutDeviceCommand { DeviceId = device.Id });
 
             device.Status = Status.Deleted;
 

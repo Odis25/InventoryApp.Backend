@@ -1,8 +1,8 @@
-﻿using InventoryApp.Domain.Common;
+﻿using MediatR;
 
-namespace InventoryApp.Domain
+namespace InventoryApp.Application.Cables.Commands.CreateCable
 {
-    public class Cable: Item
+    public class CreateCableCommand : IRequest<int>
     {
         public int Length { get; set; }
         public string Name { get; set; }

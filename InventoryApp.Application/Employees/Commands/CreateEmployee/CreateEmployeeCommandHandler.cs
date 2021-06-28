@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace InventoryApp.Application.Employees.Commands.CreateEmployee
 {
-    public class CreateEmployeeCommandHandler : IRequestHandler<CreateEmployeeCommand, int>
+    public class CreateEmployeeCommandHandler 
+        : IRequestHandler<CreateEmployeeCommand, int>
     {
         private readonly IAppDbContext _dbContext;
 

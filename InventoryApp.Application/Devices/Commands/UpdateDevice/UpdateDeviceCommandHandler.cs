@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace InventoryApp.Application.Devices.Commands.UpdateDevice
 {
-    public class UpdateDeviceCommandHandler : IRequestHandler<UpdateDeviceCommand>
+    public class UpdateDeviceCommandHandler 
+        : IRequestHandler<UpdateDeviceCommand>
     {
         private readonly IAppDbContext _dbContext;
 

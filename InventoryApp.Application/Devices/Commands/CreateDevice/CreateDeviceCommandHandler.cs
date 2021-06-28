@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace InventoryApp.Application.Devices.Commands.CreateDevice
 {
-    public class CreateDeviceCommandHandler : IRequestHandler<CreateDeviceCommand, int>
+    public class CreateDeviceCommandHandler 
+        : IRequestHandler<CreateDeviceCommand, int>
     {
         private readonly IAppDbContext _dbContext;
         public CreateDeviceCommandHandler(IAppDbContext dbContext) => 

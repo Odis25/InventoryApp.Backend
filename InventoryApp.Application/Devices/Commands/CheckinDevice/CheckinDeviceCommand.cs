@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace InventoryApp.Application.Checkouts.Commands.CheckinDevice
+namespace InventoryApp.Application.Devices.Commands.CheckinDevice
 {
     public class CheckinDeviceCommand : IRequest<long>
     {

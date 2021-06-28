@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace InventoryApp.Application.Employees.Commands.UpdateEmployee
 {
-    public class UpdateEmployeeCommandHandler : IRequestHandler<UpdateEmployeeCommand>
+    public class UpdateEmployeeCommandHandler 
+        : IRequestHandler<UpdateEmployeeCommand>
     {
         private readonly IAppDbContext _dbContext;
 

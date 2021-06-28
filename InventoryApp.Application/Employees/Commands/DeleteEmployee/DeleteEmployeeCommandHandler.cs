@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace InventoryApp.Application.Employees.Commands.DeleteEmployee
 {
-    public class DeleteEmployeeCommandHandler : IRequestHandler<DeleteEmployeeCommand>
+    public class DeleteEmployeeCommandHandler 
+        : IRequestHandler<DeleteEmployeeCommand>
     {
         private readonly IAppDbContext _dbContext;
 

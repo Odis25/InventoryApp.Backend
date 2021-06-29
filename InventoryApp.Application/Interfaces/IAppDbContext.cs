@@ -12,7 +12,6 @@ namespace InventoryApp.Application.Interfaces
         DbSet<Employee> Employees { get; set; }
         DbSet<Cable> Cables { get; set; }
         DbSet<Checkout> Checkouts { get; set; }
-        DbSet<Position> Positions { get; set; }
         DbSet<Department> Departments { get; set; }
 
         Task<int> SaveChangesAsync(CancellationToken cancelationToken);

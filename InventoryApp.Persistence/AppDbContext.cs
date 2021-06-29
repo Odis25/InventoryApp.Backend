@@ -15,7 +15,6 @@ namespace InventoryApp.Persistence
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Cable> Cables { get; set; }
         public DbSet<Checkout> Checkouts { get; set; }
-        public DbSet<Position> Positions { get; set; }
         public DbSet<Department> Departments { get; set; }
         public DbSet<DeviceType> DeviceTypes { get; set; }
 

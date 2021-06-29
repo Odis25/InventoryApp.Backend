@@ -3,7 +3,7 @@ using InventoryApp.Application.Common.Mappings;
 using InventoryApp.Domain;
 using System.Linq;
 
-namespace InventoryApp.Application.Devices.Queries.GetDevice
+namespace InventoryApp.Application.Devices.Queries.GetDeviceDetails
 {
     public class EmployeeDto : IMapWith<Employee>
     {

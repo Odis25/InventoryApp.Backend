@@ -17,7 +17,7 @@ namespace InventoryApp.Application.Cables.Commands.UpdateCable
 
         public async Task<Unit> Handle(UpdateCableCommand request, CancellationToken cancellationToken)
         {
-            var cable = await _dbContext.Cables.FindAsync(request.Id);
+            var cable = await _dbContext.Cables.FindAsync(new object[] { request.Id }, cancellationToken);
 
             if (cable == null)
             {

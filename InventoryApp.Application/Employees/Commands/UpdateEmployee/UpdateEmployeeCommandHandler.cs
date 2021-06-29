@@ -17,7 +17,7 @@ namespace InventoryApp.Application.Employees.Commands.UpdateEmployee
 
         public async Task<Unit> Handle(UpdateEmployeeCommand request, CancellationToken cancellationToken)
         {
-            var employee = await _dbContext.Employees.FindAsync(request.Id, cancellationToken);
+            var employee = await _dbContext.Employees.FindAsync(new object[] { request.Id }, cancellationToken);
 
             if (employee == null)
             {
@@ -27,8 +27,7 @@ namespace InventoryApp.Application.Employees.Commands.UpdateEmployee
             employee.Name = request.Name;
             employee.LastName = request.LastName;
             employee.Patronymic = request.Patronymic;
-            employee.Position = await _dbContext.Positions.FindAsync(request.PositionId, cancellationToken);
-            employee.Department = await _dbContext.Departments.FindAsync(request.DepartmentId, cancellationToken);
+            employee.Department = await _dbContext.Departments.FindAsync(new object[] { request.DepartmentId }, cancellationToken);
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 

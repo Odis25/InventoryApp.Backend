@@ -3,7 +3,6 @@ using InventoryApp.Application.Common.Exceptions;
 using InventoryApp.Application.Interfaces;
 using InventoryApp.Domain;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -20,8 +19,7 @@ namespace InventoryApp.Application.Employees.Queries.GetEmployeeDetails
         public async Task<EmployeeDetailsVm> Handle(GetEmployeeDetailsQuery request, CancellationToken cancellationToken)
         {
             var employee = await _dbContext.Employees
-                .FirstOrDefaultAsync(employee => 
-                employee.Id == request.Id, cancellationToken);
+                .FindAsync(new object[] { request.Id }, cancellationToken);
 
             if (employee == null)
             {

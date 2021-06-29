@@ -21,8 +21,7 @@ namespace InventoryApp.Application.Employees.Commands.CreateEmployee
                 Name = request.Name,
                 LastName = request.LastName,
                 Patronymic = request.Patronymic,
-                Position = await _dbContext.Positions.FindAsync(request.PositionId, cancellationToken),
-                Department = await _dbContext.Departments.FindAsync(request.DepartmentId, cancellationToken),
+                Department = await _dbContext.Departments.FindAsync(new object[] { request.DepartmentId }, cancellationToken),
                 IsActive = true
             };
 

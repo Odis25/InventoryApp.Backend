@@ -12,7 +12,6 @@ namespace InventoryApp.Application.Employees.Queries.GetEmployeeDetails
         public string LastName { get; set; }
         public string Patronymic { get; set; }
         public string Department { get; set; }
-        public string Position { get; set; }
 
         public IEnumerable<CheckoutDto> Checkouts { get; set; }
 
@@ -20,9 +19,7 @@ namespace InventoryApp.Application.Employees.Queries.GetEmployeeDetails
         {
             profile.CreateMap<Employee, EmployeeDetailsVm>()
                 .ForMember(dest => dest.Department,
-                    opt => opt.MapFrom(src => src.Department.Name))
-                .ForMember(dest => dest.Position,
-                    opt => opt.MapFrom(src => src.Position.Name));
+                    opt => opt.MapFrom(src => src.Department.Name));
         }
     }
 }

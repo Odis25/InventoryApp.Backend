@@ -25,7 +25,7 @@ namespace InventoryApp.Application.Devices.Commands.CreateDevice
                 Description = request.Description,
                 Year = request.Year,
                 Status = Status.Available,
-                Type = await _dbContext.DeviceTypes.FindAsync(request.TypeId, cancellationToken)
+                Type = await _dbContext.DeviceTypes.FindAsync(new object[] { request.TypeId }, cancellationToken)
             };
 
             await _dbContext.Devices.AddAsync(device, cancellationToken);

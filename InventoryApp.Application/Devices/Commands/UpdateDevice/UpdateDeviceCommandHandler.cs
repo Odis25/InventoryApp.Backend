@@ -17,7 +17,7 @@ namespace InventoryApp.Application.Devices.Commands.UpdateDevice
 
         public async Task<Unit> Handle(UpdateDeviceCommand request, CancellationToken cancellationToken)
         {
-            var device = await _dbContext.Devices.FindAsync(request.Id, cancellationToken);
+            var device = await _dbContext.Devices.FindAsync(new object[] { request.Id }, cancellationToken);
 
             if (device == null)
             {
@@ -30,7 +30,7 @@ namespace InventoryApp.Application.Devices.Commands.UpdateDevice
             device.SerialNumber = request.SerialNumber;
             device.Year = request.Year;
             device.Description = request.Description;
-            device.Type = await _dbContext.DeviceTypes.FindAsync(request.TypeId, cancellationToken);
+            device.Type = await _dbContext.DeviceTypes.FindAsync(new object[] { request.TypeId }, cancellationToken);
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 

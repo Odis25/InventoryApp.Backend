@@ -2,7 +2,7 @@
 using InventoryApp.Domain;
 using System;
 
-namespace InventoryApp.Application.Devices.Queries.GetDevice
+namespace InventoryApp.Application.Devices.Queries.GetDeviceDetails
 {
     public class CheckoutDto : IMapWith<Device>
     {

@@ -8,20 +8,20 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace InventoryApp.Application.Devices.Queries.GetDevicesList
+namespace InventoryApp.Application.Devices.Queries.GetAvailableDevicesList
 {
-    public class GetDevicesListQueryHandler : IRequestHandler<GetDevicesListQuery, DevicesListVm>
+    public class GetAvailableDevicesListQueryHandler : IRequestHandler<GetAvailableDevicesListQuery, DevicesListVm>
     {
         private readonly IAppDbContext _dbContext;
         private readonly IMapper _mapper;
 
-        public GetDevicesListQueryHandler(IAppDbContext dbContext, IMapper mapper) =>
+        public GetAvailableDevicesListQueryHandler(IAppDbContext dbContext, IMapper mapper) =>
             (_dbContext, _mapper) = (dbContext, mapper);
 
-        public async Task<DevicesListVm> Handle(GetDevicesListQuery request, CancellationToken cancellationToken)
+        public async Task<DevicesListVm> Handle(GetAvailableDevicesListQuery request, CancellationToken cancellationToken)
         {
             var devices = await _dbContext.Devices
-                .Where(device => device.Status != Status.Deleted)
+                .Where(device => device.Status == Status.Available)
                 .ProjectTo<DeviceDto>(_mapper.ConfigurationProvider)
                 .ToListAsync(cancellationToken);
 

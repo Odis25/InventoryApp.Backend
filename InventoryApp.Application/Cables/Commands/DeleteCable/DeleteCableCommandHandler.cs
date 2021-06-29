@@ -20,7 +20,7 @@ namespace InventoryApp.Application.Cables.Commands.DeleteCable
 
         public async Task<Unit> Handle(DeleteCableCommand request, CancellationToken cancellationToken)
         {
-            var cable = await _dbContext.Cables.FindAsync(request.CableId, cancellationToken);
+            var cable = await _dbContext.Cables.FindAsync(new object[] { request.CableId }, cancellationToken);
 
             if (cable == null)
             {

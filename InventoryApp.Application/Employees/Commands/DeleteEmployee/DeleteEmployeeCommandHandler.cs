@@ -17,7 +17,7 @@ namespace InventoryApp.Application.Employees.Commands.DeleteEmployee
 
         public async Task<Unit> Handle(DeleteEmployeeCommand request, CancellationToken cancellationToken)
         {
-            var employee = await _dbContext.Employees.FindAsync(request.Id, cancellationToken);
+            var employee = await _dbContext.Employees.FindAsync(new object[] { request.Id }, cancellationToken);
 
             if (employee == null)
             {

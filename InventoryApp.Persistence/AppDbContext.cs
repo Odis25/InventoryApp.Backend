@@ -1,9 +1,9 @@
 ﻿using InventoryApp.Application.Interfaces;
 using InventoryApp.Domain;
 using InventoryApp.Domain.Common;
-using InventoryApp.Persistence.EntityTypeConfigurations;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,7 +24,7 @@ namespace InventoryApp.Persistence
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.ApplyConfiguration(new DeviceConfiguration());
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
             base.OnModelCreating(builder);
         }
 

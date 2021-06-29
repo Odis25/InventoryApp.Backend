@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace InventoryApp.Application.Devices.Queries.GetDevice
+namespace InventoryApp.Application.Devices.Queries.GetDeviceDetails
 {
     public class GetDeviceDetailsQuery : IRequest<DeviceDetailsVm>
     {

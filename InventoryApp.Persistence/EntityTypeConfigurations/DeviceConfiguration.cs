@@ -8,6 +8,7 @@ namespace InventoryApp.Persistence.EntityTypeConfigurations
     {
         public void Configure(EntityTypeBuilder<Device> builder)
         {
+            builder.ToTable("Devices");
             builder.Property(device => device.Name).HasMaxLength(250);
         }
     }

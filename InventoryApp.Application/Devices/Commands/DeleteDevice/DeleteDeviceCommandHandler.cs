@@ -20,14 +20,14 @@ namespace InventoryApp.Application.Devices.Commands.DeleteDevice
 
         public async Task<Unit> Handle(DeleteDeviceCommand request, CancellationToken cancellationToken)
         {
-            var device = await _dbContext.Devices.FindAsync(request.Id, cancellationToken);
+            var device = await _dbContext.Devices.FindAsync(new object[] { request.Id }, cancellationToken);
            
             if (device == null)
             {
                 throw new NotFoundException(nameof(Device), request.Id);
             }
 
-            await _mediator.Send(new CheckoutDeviceCommand { DeviceId = device.Id });
+            await _mediator.Send(new CheckoutDeviceCommand { DeviceId = device.Id }, cancellationToken);
 
             device.Status = Status.Deleted;
 

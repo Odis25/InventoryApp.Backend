@@ -10,7 +10,6 @@ namespace InventoryApp.Application.Employees.Queries.GetEmployeesList
     {
         public int Id { get; set; }
         public string Department { get; set; }
-        public string Position { get; set; }
         public string FullName { get; set; }
 
         public IEnumerable<CheckoutDto> Checkouts { get; set; }
@@ -18,8 +17,6 @@ namespace InventoryApp.Application.Employees.Queries.GetEmployeesList
         public void Mapping(Profile profile)
         {
             profile.CreateMap<Employee, EmployeeDto>()
-                .ForMember(dest => dest.Position,
-                opt => opt.MapFrom(src => src.Position.Name))
                 .ForMember(dest => dest.Department,
                 opt => opt.MapFrom(src => src.Department.Name))
                 .ForMember(dest => dest.FullName,

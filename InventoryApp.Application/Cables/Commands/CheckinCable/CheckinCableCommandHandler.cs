@@ -18,14 +18,14 @@ namespace InventoryApp.Application.Cables.Commands.CheckinCable
 
         public async Task<long> Handle(CheckinCableCommand request, CancellationToken cancellationToken)
         {
-            var cable = await _dbContext.Cables.FindAsync(request.CableId, cancellationToken);
+            var cable = await _dbContext.Cables.FindAsync(new object[] { request.CableId }, cancellationToken);
 
             if (cable == null)
             {
                 throw new NotFoundException(nameof(Device), request.CableId);
             }
 
-            var employee = await _dbContext.Employees.FindAsync(request.EmployeeId, cancellationToken);
+            var employee = await _dbContext.Employees.FindAsync(new object[] { request.EmployeeId }, cancellationToken);
 
             if (employee == null)
             {

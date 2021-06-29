@@ -6,7 +6,7 @@ using MediatR;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace InventoryApp.Application.Devices.Queries.GetDevice
+namespace InventoryApp.Application.Devices.Queries.GetDeviceDetails
 {
     public class GetDeviceDetailsQueryHandler : IRequestHandler<GetDeviceDetailsQuery, DeviceDetailsVm>
     {
@@ -18,7 +18,7 @@ namespace InventoryApp.Application.Devices.Queries.GetDevice
 
         public async Task<DeviceDetailsVm> Handle(GetDeviceDetailsQuery request, CancellationToken cancellationToken)
         {
-            var device = await _dbContext.Devices.FindAsync(request.Id, cancellationToken);
+            var device = await _dbContext.Devices.FindAsync(new object[] { request.Id }, cancellationToken);
 
             if (device == null)
             {

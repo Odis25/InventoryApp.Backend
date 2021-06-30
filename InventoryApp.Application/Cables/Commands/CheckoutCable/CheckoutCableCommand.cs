@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace InventoryApp.Application.Checkouts.Commands.CheckoutCable
+namespace InventoryApp.Application.Cables.Commands.CheckoutCable
 {
     public class CheckoutCableCommand : IRequest
     {

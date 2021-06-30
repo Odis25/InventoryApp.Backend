@@ -5,9 +5,9 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace InventoryApp.Application.Checkouts.Commands.CheckoutCable
+namespace InventoryApp.Application.Cables.Commands.CheckoutCable
 {
-    public class CheckoutCableCommandHandler 
+    public class CheckoutCableCommandHandler
         : IRequestHandler<CheckoutCableCommand>
     {
         private readonly IAppDbContext _dbContext;

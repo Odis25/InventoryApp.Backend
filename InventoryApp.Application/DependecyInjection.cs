@@ -1,4 +1,6 @@
-﻿using MediatR;
+﻿using FluentValidation;
+using InventoryApp.Application.Common.Behaviors;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
@@ -8,8 +10,13 @@ namespace InventoryApp.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
-            services.AddMediatR(Assembly.GetExecutingAssembly());
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            var assembley = Assembly.GetExecutingAssembly();
+
+            services.AddAutoMapper(assembley);
+            services.AddMediatR(assembley);
+            services.AddValidatorsFromAssembly(assembley);
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
       
             return services;
         }

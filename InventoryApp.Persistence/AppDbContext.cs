@@ -11,6 +11,8 @@ namespace InventoryApp.Persistence
 {
     public class AppDbContext : DbContext, IAppDbContext
     {
+        private readonly ICurrentUserService _currentUserService;
+
         public DbSet<Device> Devices { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Cable> Cables { get; set; }
@@ -18,8 +20,10 @@ namespace InventoryApp.Persistence
         public DbSet<Department> Departments { get; set; }
         public DbSet<DeviceType> DeviceTypes { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) 
-            : base(options) { }
+        public AppDbContext(DbContextOptions<AppDbContext> options,
+            ICurrentUserService currentUserService)
+            : base(options) =>
+            _currentUserService = currentUserService;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -33,13 +37,13 @@ namespace InventoryApp.Persistence
             {
                 switch (entity.State)
                 {
-                    case EntityState.Deleted:
-                        break;
                     case EntityState.Modified:
                         entity.Entity.EditDate = DateTime.Now;
+                        entity.Entity.EditedBy = _currentUserService.UserName;
                         break;
                     case EntityState.Added:
-                        entity.Entity.EditDate = DateTime.Now;
+                        entity.Entity.CreationDate = DateTime.Now;
+                        entity.Entity.CreatedBy = _currentUserService.UserName;
                         break;
                 }
             }

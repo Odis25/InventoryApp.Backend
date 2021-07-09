@@ -17,6 +17,7 @@ namespace InventoryApp.Application
             services.AddValidatorsFromAssembly(assembley);
 
             services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(LoggingBehavior<,>));
       
             return services;
         }

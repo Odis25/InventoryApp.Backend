@@ -1,4 +1,5 @@
-﻿using InventoryApp.Application.Checkouts.Commands.CheckoutCable;
+﻿using InventoryApp.Application.Cables.Commands.CheckoutCable;
+
 using InventoryApp.Application.Common.Exceptions;
 using InventoryApp.Application.Interfaces;
 using InventoryApp.Domain;

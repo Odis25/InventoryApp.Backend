@@ -4,11 +4,13 @@ using InventoryApp.Application.Devices.Commands.UpdateDevice;
 using InventoryApp.Application.Devices.Queries.GetAvailableDevicesList;
 using InventoryApp.Application.Devices.Queries.GetDeviceDetails;
 using InventoryApp.Application.Devices.Queries.GetDevicesList;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace InventoryApp.WebApi.Controllers
 {
+    
     public class DeviceController : ApiController
     {
         [HttpGet]
@@ -20,7 +22,7 @@ namespace InventoryApp.WebApi.Controllers
             return Ok(vm);
         }
 
-        [HttpGet("{available}")]
+        [HttpGet("available")]
         public async Task<IActionResult> GetAvailable()
         {
             var query = new GetAvailableDevicesListQuery();
@@ -38,6 +40,7 @@ namespace InventoryApp.WebApi.Controllers
             return Ok(vm);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] CreateDeviceCommand command)
         {
@@ -46,6 +49,7 @@ namespace InventoryApp.WebApi.Controllers
             return Ok(deviceId);
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UpdateDeviceCommand command)
         {
@@ -54,6 +58,7 @@ namespace InventoryApp.WebApi.Controllers
             return NoContent();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete]
         public async Task<IActionResult> Delete([FromBody] DeleteDeviceCommand command)
         {

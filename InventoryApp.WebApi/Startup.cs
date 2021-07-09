@@ -1,6 +1,9 @@
 using InventoryApp.Application;
+using InventoryApp.Application.Interfaces;
 using InventoryApp.Persistence;
 using InventoryApp.WebApi.Middlewares;
+using InventoryApp.WebApi.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -15,14 +18,14 @@ namespace InventoryApp.WebApi
 
         public Startup(IConfiguration configuration) =>
             Configuration = configuration;
-            
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddPersistence(Configuration);
             services.AddApplication();
             services.AddControllers();
 
-            services.AddCors(options => 
+            services.AddCors(options =>
             {
                 options.AddPolicy("AllowAll", policy =>
                 {
@@ -31,6 +34,21 @@ namespace InventoryApp.WebApi
                     policy.AllowAnyOrigin();
                 });
             });
+
+            services.AddAuthentication(config =>
+            {
+                config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer("Bearer",options =>
+                {
+                    options.Authority = "http://localhost:10000";
+                    options.Audience = "InventoryAPI";
+                    options.RequireHttpsMetadata = false;
+                });
+
+            services.AddSingleton<ICurrentUserService, CurrentUserService>();
+            services.AddHttpContextAccessor();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -44,7 +62,8 @@ namespace InventoryApp.WebApi
             app.UseRouting();
             app.UseHttpsRedirection();
             app.UseCors("AllowAll");
-
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

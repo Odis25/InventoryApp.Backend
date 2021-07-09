@@ -9,13 +9,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastructure", "Infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Presentation", "Presentation", "{6E944E12-EA82-4308-9C86-B3F5BF0CB518}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryApp.Domain", "InventoryApp.Domain\InventoryApp.Domain.csproj", "{FFCFBDA7-E846-4E12-9246-04C36BDC8888}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryApp.Domain", "InventoryApp.Domain\InventoryApp.Domain.csproj", "{FFCFBDA7-E846-4E12-9246-04C36BDC8888}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryApp.Application", "InventoryApp.Application\InventoryApp.Application.csproj", "{9F0D3FAC-16D6-419A-A75E-01EF519B2AE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryApp.Application", "InventoryApp.Application\InventoryApp.Application.csproj", "{9F0D3FAC-16D6-419A-A75E-01EF519B2AE7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryApp.Persistence", "InventoryApp.Persistence\InventoryApp.Persistence.csproj", "{69D33790-1F92-4946-9295-16863EE66FFE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryApp.Persistence", "InventoryApp.Persistence\InventoryApp.Persistence.csproj", "{69D33790-1F92-4946-9295-16863EE66FFE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InventoryApp.WebApi", "InventoryApp.WebApi\InventoryApp.WebApi.csproj", "{97BB406A-3A1B-4D14-995E-9BB1409FE5AC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "InventoryApp.WebApi", "InventoryApp.WebApi\InventoryApp.WebApi.csproj", "{97BB406A-3A1B-4D14-995E-9BB1409FE5AC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

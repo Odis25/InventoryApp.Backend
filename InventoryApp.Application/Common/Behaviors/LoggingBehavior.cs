@@ -21,7 +21,7 @@ namespace InventoryApp.Application.Common.Behaviors
         {
             var time = DateTime.Now.ToString("dd-MM-yyyy hh:mm:ss");
             var requestName = typeof(TRequest).Name;
-            var userName = _currentUserService.UserName;
+            var userName = string.IsNullOrWhiteSpace(_currentUserService.UserName) ? "unknown" : _currentUserService.UserName;
 
             var text = new StringBuilder()
                 .AppendLine($"[ --- Request Description --- ]")

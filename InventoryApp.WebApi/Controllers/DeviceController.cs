@@ -1,4 +1,6 @@
-﻿using InventoryApp.Application.Devices.Commands.CreateDevice;
+﻿using InventoryApp.Application.Devices.Commands.CheckinDevice;
+using InventoryApp.Application.Devices.Commands.CheckoutDevice;
+using InventoryApp.Application.Devices.Commands.CreateDevice;
 using InventoryApp.Application.Devices.Commands.DeleteDevice;
 using InventoryApp.Application.Devices.Commands.UpdateDevice;
 using InventoryApp.Application.Devices.Queries.GetAvailableDevicesList;
@@ -65,6 +67,24 @@ namespace InventoryApp.WebApi.Controllers
             await Mediator.Send(command);
 
             return NoContent();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("checkin")]
+        public async Task<IActionResult> CheckinDevice([FromBody] CheckinDeviceCommand command)
+        {
+            await Mediator.Send(command);
+
+            return Ok();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("checkout")]
+        public async Task<IActionResult> CheckoutDevice([FromBody] CheckoutDeviceCommand command)
+        {
+            await Mediator.Send(command);
+
+            return Ok();
         }
     }
 }

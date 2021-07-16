@@ -12,7 +12,7 @@ namespace InventoryApp.Application.Employees.Queries.GetEmployeesList
         public string Department { get; set; }
         public string FullName { get; set; }
 
-        public IEnumerable<CheckoutDto> Checkouts { get; set; }
+        public IEnumerable<DeviceDto> Devices { get; set; }
 
         public void Mapping(Profile profile)
         {
@@ -21,7 +21,9 @@ namespace InventoryApp.Application.Employees.Queries.GetEmployeesList
                 opt => opt.MapFrom(src => src.Department.Name))
                 .ForMember(dest => dest.FullName,
                 opt => opt.MapFrom(src =>
-                $"{src.LastName} {src.Name.FirstOrDefault()}.{src.Patronymic.FirstOrDefault()}."));
+                $"{src.LastName} {src.Name.FirstOrDefault()}.{src.Patronymic.FirstOrDefault()}."))
+                .ForMember(dest => dest.Devices,
+                opt => opt.MapFrom(src => src.Checkouts.Select(c=> c.Item as Device)));
         }
     }
 }

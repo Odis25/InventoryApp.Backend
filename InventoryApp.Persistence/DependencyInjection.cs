@@ -13,7 +13,8 @@ namespace InventoryApp.Persistence
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseSqlServer(connectionString);
+                options.UseLazyLoadingProxies();
+                options.UseSqlServer(connectionString);                
             });
 
             services.AddScoped<IAppDbContext>(provider => 

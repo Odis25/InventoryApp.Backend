@@ -11,7 +11,15 @@ namespace InventoryApp.WebApi.Services
             _httpContextAccessor = httpContextAccessor;
 
         public string UserId => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.NameIdentifier);
-        public string UserName => _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Name);
-        public string Role => _httpContextAccessor.HttpContext?.User?.FindFirstValue("InventoryAppRole");
+        public string UserName => GetFullName();
+        public string Role => _httpContextAccessor.HttpContext?.User?.FindFirstValue("inventoryapp_role");
+
+        private string GetFullName()
+        {
+            var givenName = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.GivenName);
+            var familyName = _httpContextAccessor.HttpContext?.User?.FindFirstValue(ClaimTypes.Surname);
+
+            return $"{familyName} {givenName}";
+        }
     }
 }

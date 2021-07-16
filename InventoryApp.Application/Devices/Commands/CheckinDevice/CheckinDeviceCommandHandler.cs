@@ -9,14 +9,14 @@ using System.Threading.Tasks;
 namespace InventoryApp.Application.Devices.Commands.CheckinDevice
 {
     public class CheckinDeviceCommandHandler
-        : IRequestHandler<CheckinDeviceCommand, long>
+        : IRequestHandler<CheckinDeviceCommand>
     {
         private readonly IAppDbContext _dbContext;
 
         public CheckinDeviceCommandHandler(IAppDbContext dbContext) =>
             _dbContext = dbContext;
 
-        public async Task<long> Handle(CheckinDeviceCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CheckinDeviceCommand request, CancellationToken cancellationToken)
         {
             var device = await _dbContext.Devices.FindAsync(new object[] { request.DeviceId }, cancellationToken);
 
@@ -42,7 +42,7 @@ namespace InventoryApp.Application.Devices.Commands.CheckinDevice
             await _dbContext.Checkouts.AddAsync(checkout, cancellationToken);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return checkout.Id;
+            return Unit.Value;
         }
     }
 }

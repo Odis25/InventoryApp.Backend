@@ -40,11 +40,12 @@ namespace InventoryApp.WebApi
                 config.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 config.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
             })
-                .AddJwtBearer("Bearer",options =>
+                .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "http://localhost:10000";
+                    options.Authority = "https://localhost:10001";
                     options.Audience = "InventoryAPI";
                     options.RequireHttpsMetadata = false;
+                    options.TokenValidationParameters.RoleClaimType = "inventoryapp_role";
                 });
 
             services.AddSingleton<ICurrentUserService, CurrentUserService>();

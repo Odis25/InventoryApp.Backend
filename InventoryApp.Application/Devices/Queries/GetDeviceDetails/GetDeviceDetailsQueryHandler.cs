@@ -3,6 +3,7 @@ using InventoryApp.Application.Common.Exceptions;
 using InventoryApp.Application.Interfaces;
 using InventoryApp.Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -18,7 +19,9 @@ namespace InventoryApp.Application.Devices.Queries.GetDeviceDetails
 
         public async Task<DeviceDetailsVm> Handle(GetDeviceDetailsQuery request, CancellationToken cancellationToken)
         {
-            var device = await _dbContext.Devices.FindAsync(new object[] { request.Id }, cancellationToken);
+            var device = await _dbContext.Devices
+                .AsNoTracking()
+                .FirstOrDefaultAsync(d => d.Id == request.Id, cancellationToken);
 
             if (device == null)
             {

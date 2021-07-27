@@ -23,7 +23,7 @@ namespace InventoryApp.Application.Employees.Queries.GetEmployeesList
                 opt => opt.MapFrom(src =>
                 $"{src.LastName} {src.Name.FirstOrDefault()}.{src.Patronymic.FirstOrDefault()}."))
                 .ForMember(dest => dest.Devices,
-                opt => opt.MapFrom(src => src.Checkouts.Select(c=> c.Item as Device)));
+                opt => opt.MapFrom(src => src.Checkouts.Where(c=> c.CheckedOut == null).Select(c=> c.Item as Device)));
         }
     }
 }

@@ -6,6 +6,7 @@ using InventoryApp.Application.Devices.Commands.UpdateDevice;
 using InventoryApp.Application.Devices.Queries.GetAvailableDevicesList;
 using InventoryApp.Application.Devices.Queries.GetDeviceDetails;
 using InventoryApp.Application.Devices.Queries.GetDevicesList;
+using InventoryApp.Application.Devices.Queries.GetDeviceTypesList;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -28,6 +29,15 @@ namespace InventoryApp.WebApi.Controllers
         public async Task<IActionResult> GetAvailable()
         {
             var query = new GetAvailableDevicesListQuery();
+            var vm = await Mediator.Send(query);
+
+            return Ok(vm);
+        }
+
+        [HttpGet("types")]
+        public async Task<IActionResult> GetDeviceTypes()
+        {
+            var query = new GetDeviceTypeListQuery();
             var vm = await Mediator.Send(query);
 
             return Ok(vm);
@@ -61,9 +71,10 @@ namespace InventoryApp.WebApi.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteDeviceCommand command)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
         {
+            var command = new DeleteDeviceCommand { Id = id };
             await Mediator.Send(command);
 
             return NoContent();

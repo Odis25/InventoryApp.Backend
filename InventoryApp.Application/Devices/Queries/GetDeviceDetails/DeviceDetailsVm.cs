@@ -14,21 +14,18 @@ namespace InventoryApp.Application.Devices.Queries.GetDeviceDetails
         public string Model { get; set; }
         public string Manufacturer { get; set; }
         public string SerialNumber { get; set; }
-        public string Type { get; set; }
         public string Description { get; set; }
-
         public string CreatedBy { get; set; }
         public string EditedBy { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime EditDate { get; set; }
+        public DeviceTypeDto Type { get; set; }
 
         public IList<CheckoutDto> Checkouts { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Device, DeviceDetailsVm>()
-                .ForMember(dest => dest.Type,
-                opt => opt.MapFrom(src => src.Type.Name));
+            profile.CreateMap<Device, DeviceDetailsVm>();
         }
     }
 }

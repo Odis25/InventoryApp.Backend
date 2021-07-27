@@ -19,12 +19,14 @@ namespace InventoryApp.Application.Devices.Commands.CheckoutDevice
         {
             var checkout = await _dbContext.Checkouts.FirstOrDefaultAsync(checkout =>
                 checkout.Item.Id == request.DeviceId
-                && checkout.CheckedOut == null);
+                && checkout.CheckedOut == null, cancellationToken);
 
             if (checkout != null)
             {
                 checkout.CheckedOut = DateTime.Now;
             }
+
+            await _dbContext.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }

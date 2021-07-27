@@ -22,7 +22,7 @@ namespace InventoryApp.WebApi
                 }
                 catch (Exception exception)
                 {
-                    var logger = scope.ServiceProvider.GetRequiredService<ILogger>();
+                    var logger = scope.ServiceProvider.GetRequiredService<ILogger<Program>>();
                     logger.LogError(exception.Message);
                 }
             }

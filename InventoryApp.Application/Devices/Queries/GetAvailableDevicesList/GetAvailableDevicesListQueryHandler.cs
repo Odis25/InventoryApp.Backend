@@ -23,6 +23,7 @@ namespace InventoryApp.Application.Devices.Queries.GetAvailableDevicesList
             var devices = await _dbContext.Devices
                 .Where(device => device.Status == Status.Available)
                 .ProjectTo<DeviceDto>(_mapper.ConfigurationProvider)
+                .AsNoTracking()
                 .ToListAsync(cancellationToken);
 
             return new DevicesListVm { Devices = devices };

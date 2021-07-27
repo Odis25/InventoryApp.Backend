@@ -2,6 +2,7 @@
 using InventoryApp.Application.Interfaces;
 using InventoryApp.Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -24,13 +25,25 @@ namespace InventoryApp.Application.Devices.Commands.UpdateDevice
                 throw new NotFoundException(nameof(Device), request.Id);
             }
 
+            var type = new DeviceType { Name = request.Type.Name };
+
+            if (request.Type.Id == 0)
+            {
+                await _dbContext.DeviceTypes.AddAsync(type, cancellationToken);
+                await _dbContext.SaveChangesAsync(cancellationToken);
+            }
+            else
+            {
+                type = await _dbContext.DeviceTypes.FirstOrDefaultAsync(dt => dt.Id == request.Type.Id, cancellationToken);
+            }
+
             device.Name = request.Name;
             device.Model = request.Model;
             device.Manufacturer = request.Manufacturer;
             device.SerialNumber = request.SerialNumber;
             device.Year = request.Year;
             device.Description = request.Description;
-            device.Type = await _dbContext.DeviceTypes.FindAsync(new object[] { request.TypeId }, cancellationToken);
+            device.Type = type;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 

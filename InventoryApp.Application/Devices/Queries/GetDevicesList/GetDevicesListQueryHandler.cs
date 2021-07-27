@@ -20,9 +20,11 @@ namespace InventoryApp.Application.Devices.Queries.GetDevicesList
 
         public async Task<DevicesListVm> Handle(GetDevicesListQuery request, CancellationToken cancellationToken)
         {
+            var dev = await _dbContext.Devices.FirstOrDefaultAsync();
             var devices = await _dbContext.Devices
                 .Where(device => device.Status != Status.Deleted)
                 .ProjectTo<DeviceDto>(_mapper.ConfigurationProvider)
+                .AsNoTracking()
                 .ToListAsync(cancellationToken);
 
             return new DevicesListVm { Devices = devices };

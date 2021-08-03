@@ -28,6 +28,7 @@ namespace InventoryApp.Application.Cables.Commands.UpdateCable
             cable.Mark = request.Mark;
             cable.Name = request.Name;
             cable.Type = request.Type;
+            cable.Description = request.Description;
 
             await _dbContext.SaveChangesAsync(cancellationToken);
 

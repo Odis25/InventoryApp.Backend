@@ -1,7 +1,10 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using InventoryApp.Application.Interfaces;
+using InventoryApp.Domain.Enums;
 using MediatR;
-using System;
+using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,9 +18,15 @@ namespace InventoryApp.Application.Cables.Queries.GetCablesList
         public GetCablesListQueryHandler(IAppDbContext dbContext, IMapper mapper) =>
             (_dbContext, _mapper) = (dbContext, mapper);
 
-        public Task<CablesListVm> Handle(GetCablesListQuery request, CancellationToken cancellationToken)
+        public async Task<CablesListVm> Handle(GetCablesListQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var cables = await _dbContext.Cables
+                .Where(c => c.Status != Status.Deleted)
+                .ProjectTo<CableDto>(_mapper.ConfigurationProvider)
+                .AsNoTracking()
+                .ToListAsync(cancellationToken);
+
+            return new CablesListVm { Cables = cables };
         }
     }
 }

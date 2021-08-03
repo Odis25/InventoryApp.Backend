@@ -18,13 +18,6 @@ namespace InventoryApp.Application.Devices.Commands.CheckinDevice
 
         public async Task<Unit> Handle(CheckinDeviceCommand request, CancellationToken cancellationToken)
         {
-            var device = await _dbContext.Devices.FindAsync(new object[] { request.DeviceId }, cancellationToken);
-
-            if (device == null)
-            {
-                throw new NotFoundException(nameof(Device), request.DeviceId);
-            }
-
             var employee = await _dbContext.Employees.FindAsync(new object[] { request.EmployeeId }, cancellationToken);
 
             if (employee == null)
@@ -32,14 +25,27 @@ namespace InventoryApp.Application.Devices.Commands.CheckinDevice
                 throw new NotFoundException(nameof(Employee), request.EmployeeId);
             }
 
-            var checkout = new Checkout
+            foreach (var id in request.DevicesId)
             {
-                Item = device,
-                Employee = employee,
-                CheckedIn = DateTime.Now
-            };
+                var device = await _dbContext.Devices.FindAsync(new object[] { id }, cancellationToken);
 
-            await _dbContext.Checkouts.AddAsync(checkout, cancellationToken);
+                if (device == null)
+                {
+                    throw new NotFoundException(nameof(Device), id);
+                }
+
+                device.Status = Domain.Enums.Status.InUse;
+
+                var checkout = new Checkout
+                {
+                    Item = device,
+                    Employee = employee,
+                    CheckedIn = DateTime.Now
+                };
+
+                await _dbContext.Checkouts.AddAsync(checkout, cancellationToken);
+            }
+
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;

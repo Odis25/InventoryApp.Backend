@@ -19,15 +19,18 @@ namespace InventoryApp.Application.Cables.Commands.CheckoutCable
         {
             var checkout = await _dbContext.Checkouts.FirstOrDefaultAsync(checkout =>
                 checkout.Item.Id == request.CableId
-                && checkout.CheckedOut == null);
+                && checkout.CheckedOut == null, cancellationToken);
 
             if (checkout != null)
             {
                 checkout.CheckedOut = DateTime.Now;
             }
 
-            return Unit.Value;
+            checkout.Item.Status = Domain.Enums.Status.Available;
 
+            await _dbContext.SaveChangesAsync(cancellationToken);
+
+            return Unit.Value;
         }
     }
 }

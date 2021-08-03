@@ -20,7 +20,6 @@ namespace InventoryApp.Application.Employees.Queries.GetEmployeeDetails
         public async Task<EmployeeDetailsVm> Handle(GetEmployeeDetailsQuery request, CancellationToken cancellationToken)
         {
             var employee = await _dbContext.Employees
-                .AsNoTracking()
                 .FirstOrDefaultAsync(e => e.Id == request.Id, cancellationToken);               
 
             if (employee == null)

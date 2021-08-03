@@ -6,8 +6,8 @@ namespace InventoryApp.Application.Devices.Commands.CheckinDevice
     {
         public CheckinDeviceCommandValidation()
         {
-            RuleFor(checkinDeviceCommand => checkinDeviceCommand.DeviceId)
-                .NotEqual(0).WithMessage("Это поле не можетбыть равно 0");
+            RuleFor(checkinDeviceCommand => checkinDeviceCommand.DevicesId)
+                .NotEmpty().WithMessage("Это поле не может быть пустым");
 
             RuleFor(checkinDeviceCommand => checkinDeviceCommand.EmployeeId)
                 .NotEqual(0).WithMessage("Это поле не можетбыть равно 0");

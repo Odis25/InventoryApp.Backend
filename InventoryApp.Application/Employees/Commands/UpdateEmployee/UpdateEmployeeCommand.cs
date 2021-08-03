@@ -8,6 +8,6 @@ namespace InventoryApp.Application.Employees.Commands.UpdateEmployee
         public string Name { get; set; }
         public string LastName { get; set; }
         public string Patronymic { get; set; }
-        public int DepartmentId { get; set; }
+        public DepartmentDto Department { get; set; }
     }
 }

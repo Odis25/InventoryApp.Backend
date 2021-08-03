@@ -4,16 +4,14 @@ using InventoryApp.Domain;
 
 namespace InventoryApp.Application.Employees.Queries.GetEmployeeDetails
 {
-    public class DeviceDto : IMapWith<Device>
+    public class DepartmentDto : IMapWith<Department>
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Model { get; set; }
-        public string Manufacturer { get; set; }
 
         public void Mapping(Profile profile)
         {
-            profile.CreateMap<Device, DeviceDto>();
+            profile.CreateMap<Department, DepartmentDto>();
         }
     }
 }

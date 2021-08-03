@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using InventoryApp.Application.Common.Exceptions;
 using InventoryApp.Application.Interfaces;
+using InventoryApp.Domain;
 using MediatR;
-using System;
+using Microsoft.EntityFrameworkCore;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -15,9 +17,18 @@ namespace InventoryApp.Application.Cables.Queries.GetCableDetails
         public GetCableDetailsQueryHandler(IAppDbContext dbContext, IMapper mapper) =>
             (_dbContext, _mapper) = (dbContext, mapper);
 
-        public Task<CableDetailsVm> Handle(GetCableDetailsQuery request, CancellationToken cancellationToken)
+        public async Task<CableDetailsVm> Handle(GetCableDetailsQuery request, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            var cable = await _dbContext.Cables
+                .FirstOrDefaultAsync(cable => cable.Id == request.Id, 
+                cancellationToken);
+
+            if (cable == null)
+            {
+                throw new NotFoundException(nameof(Cable), request.Id);
+            }
+
+            return _mapper.Map<CableDetailsVm>(cable);
         }
     }
 }

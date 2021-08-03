@@ -1,6 +1,7 @@
 ﻿using InventoryApp.Application.Employees.Commands.CreateEmployee;
 using InventoryApp.Application.Employees.Commands.DeleteEmployee;
 using InventoryApp.Application.Employees.Commands.UpdateEmployee;
+using InventoryApp.Application.Employees.Queries.GetDepartments;
 using InventoryApp.Application.Employees.Queries.GetEmployeeDetails;
 using InventoryApp.Application.Employees.Queries.GetEmployeesList;
 using Microsoft.AspNetCore.Authorization;
@@ -15,6 +16,15 @@ namespace InventoryApp.WebApi.Controllers
         public async Task<IActionResult> GetAll()
         {
             var query = new GetEmployeesListQuery();
+            var vm = await Mediator.Send(query);
+
+            return Ok(vm);
+        }
+
+        [HttpGet("departments")]
+        public async Task<IActionResult> GetDepartments()
+        {
+            var query = new GetDepartmentsQuery();
             var vm = await Mediator.Send(query);
 
             return Ok(vm);
@@ -48,9 +58,10 @@ namespace InventoryApp.WebApi.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteEmployeeCommand command)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
         {
+            var command = new DeleteEmployeeCommand { Id = id };
             await Mediator.Send(command);
 
             return NoContent();

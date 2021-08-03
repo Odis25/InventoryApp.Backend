@@ -23,6 +23,7 @@ namespace InventoryApp.Application.Cables.Commands.CreateCable
                 Mark = request.Mark,
                 Name = request.Name,
                 Type = request.Type,
+                Description = request.Description,
                 Status = Status.Available
             };
 

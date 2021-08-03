@@ -20,13 +20,13 @@ namespace InventoryApp.Application.Cables.Queries.GetAvailableCablesList
 
         public async Task<CablesListVm> Handle(GetAvailableCablesListQuery request, CancellationToken cancellationToken)
         {
-            var devices = await _dbContext.Cables
+            var cables = await _dbContext.Cables
                 .Where(cable => cable.Status == Status.Available)
                 .ProjectTo<CableDto>(_mapper.ConfigurationProvider)
                 .AsNoTracking()
                 .ToListAsync(cancellationToken);
 
-            return new CablesListVm { Cables = devices };
+            return new CablesListVm { Cables = cables };
         }
     }
 }

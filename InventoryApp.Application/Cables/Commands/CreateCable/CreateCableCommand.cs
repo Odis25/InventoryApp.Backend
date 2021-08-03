@@ -8,5 +8,6 @@ namespace InventoryApp.Application.Cables.Commands.CreateCable
         public string Name { get; set; }
         public string Mark { get; set; }
         public string Type { get; set; }
+        public string Description { get; set; }
     }
 }

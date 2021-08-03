@@ -1,4 +1,6 @@
-﻿using InventoryApp.Application.Cables.Commands.CreateCable;
+﻿using InventoryApp.Application.Cables.Commands.CheckinCable;
+using InventoryApp.Application.Cables.Commands.CheckoutCable;
+using InventoryApp.Application.Cables.Commands.CreateCable;
 using InventoryApp.Application.Cables.Commands.DeleteCable;
 using InventoryApp.Application.Cables.Commands.UpdateCable;
 using InventoryApp.Application.Cables.Queries.GetAvailableCablesList;
@@ -58,8 +60,28 @@ namespace InventoryApp.WebApi.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete]
-        public async Task<IActionResult> Delete([FromBody] DeleteCableCommand command)
+        [HttpDelete("{id:int}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            var command = new DeleteCableCommand { CableId = id };
+
+            await Mediator.Send(command);
+
+            return NoContent();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("checkin")]
+        public async Task<IActionResult> CheckinDevice([FromBody] CheckinCableCommand command)
+        {
+            await Mediator.Send(command);
+
+            return NoContent();
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPost("checkout")]
+        public async Task<IActionResult> CheckoutDevice([FromBody] CheckoutCableCommand command)
         {
             await Mediator.Send(command);
 

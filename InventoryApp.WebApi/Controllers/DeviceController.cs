@@ -86,7 +86,7 @@ namespace InventoryApp.WebApi.Controllers
         {
             await Mediator.Send(command);
 
-            return Ok();
+            return NoContent();
         }
 
         [Authorize(Roles = "Admin")]
@@ -95,7 +95,7 @@ namespace InventoryApp.WebApi.Controllers
         {
             await Mediator.Send(command);
 
-            return Ok();
+            return NoContent();
         }
     }
 }

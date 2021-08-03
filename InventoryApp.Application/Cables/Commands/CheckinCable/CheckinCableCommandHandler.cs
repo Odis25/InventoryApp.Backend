@@ -9,22 +9,15 @@ using System.Threading.Tasks;
 namespace InventoryApp.Application.Cables.Commands.CheckinCable
 {
     public class CheckinCableCommandHandler
-        : IRequestHandler<CheckinCableCommand, long>
+        : IRequestHandler<CheckinCableCommand>
     {
         private readonly IAppDbContext _dbContext;
 
         public CheckinCableCommandHandler(IAppDbContext dbContext) =>
             _dbContext = dbContext;
 
-        public async Task<long> Handle(CheckinCableCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(CheckinCableCommand request, CancellationToken cancellationToken)
         {
-            var cable = await _dbContext.Cables.FindAsync(new object[] { request.CableId }, cancellationToken);
-
-            if (cable == null)
-            {
-                throw new NotFoundException(nameof(Device), request.CableId);
-            }
-
             var employee = await _dbContext.Employees.FindAsync(new object[] { request.EmployeeId }, cancellationToken);
 
             if (employee == null)
@@ -32,17 +25,30 @@ namespace InventoryApp.Application.Cables.Commands.CheckinCable
                 throw new NotFoundException(nameof(Employee), request.EmployeeId);
             }
 
-            var checkout = new Checkout
+            foreach (var id in request.CablesId)
             {
-                Item = cable,
-                Employee = employee,
-                CheckedIn = DateTime.Now
-            };
+                var cable = await _dbContext.Cables.FindAsync(new object[] { id }, cancellationToken);
 
-            await _dbContext.Checkouts.AddAsync(checkout, cancellationToken);
+                if (cable == null)
+                {
+                    throw new NotFoundException(nameof(Cable), id);
+                }
+
+                cable.Status = Domain.Enums.Status.InUse;
+
+                var checkout = new Checkout
+                {
+                    Item = cable,
+                    Employee = employee,
+                    CheckedIn = DateTime.Now
+                };
+
+                await _dbContext.Checkouts.AddAsync(checkout, cancellationToken);
+            }
+
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            return checkout.Id;
+            return Unit.Value;
         }
     }
 }

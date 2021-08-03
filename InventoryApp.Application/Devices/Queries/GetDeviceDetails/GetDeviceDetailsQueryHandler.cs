@@ -20,7 +20,6 @@ namespace InventoryApp.Application.Devices.Queries.GetDeviceDetails
         public async Task<DeviceDetailsVm> Handle(GetDeviceDetailsQuery request, CancellationToken cancellationToken)
         {
             var device = await _dbContext.Devices
-                .AsNoTracking()
                 .FirstOrDefaultAsync(d => d.Id == request.Id, cancellationToken);
 
             if (device == null)

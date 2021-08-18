@@ -27,11 +27,13 @@ namespace InventoryApp.WebApi
 
             services.AddCors(options =>
             {
-                options.AddPolicy("AllowAll", policy =>
+                options.AddDefaultPolicy(policy =>
                 {
-                    policy.AllowAnyMethod();
-                    policy.AllowAnyHeader();
-                    policy.AllowAnyOrigin();
+                    policy.WithOrigins(
+                        "https://pnrsu-server.incomsystem.ru:8080",
+                        "https://192.168.110.17:8080")
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
                 });
             });
 
@@ -42,9 +44,9 @@ namespace InventoryApp.WebApi
             })
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "https://localhost:10001";
+                    options.Authority = "https://pnrsu-server.incomsystem.ru:10001";
                     options.Audience = "InventoryAPI";
-                    options.RequireHttpsMetadata = false;
+                    options.RequireHttpsMetadata = true;
                     options.TokenValidationParameters.RoleClaimType = "inventoryapp_role";
                 });
 
@@ -58,11 +60,11 @@ namespace InventoryApp.WebApi
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            
             app.UseCustomExceptionHandler();
             app.UseRouting();
             app.UseHttpsRedirection();
-            app.UseCors("AllowAll");
+            app.UseCors();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>

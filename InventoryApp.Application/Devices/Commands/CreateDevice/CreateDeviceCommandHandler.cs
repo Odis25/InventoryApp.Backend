@@ -15,7 +15,7 @@ namespace InventoryApp.Application.Devices.Commands.CreateDevice
             _dbContext = dbContext;
 
         public async Task<int> Handle(CreateDeviceCommand request, CancellationToken cancellationToken)
-        {
+        {            
             var device = new Device
             {
                 Name = request.Name,

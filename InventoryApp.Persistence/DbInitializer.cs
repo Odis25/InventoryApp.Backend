@@ -12,7 +12,7 @@ namespace InventoryApp.Persistence
 
             if (!context.Departments.Any())
             {
-                var departments = new List<Department> 
+                var departments = new List<Department>
                 {
                     new Department { Name = "ДИСО" },
                     new Department { Name = "ДАСУ" },
@@ -38,6 +38,7 @@ namespace InventoryApp.Persistence
                 };
 
                 context.DeviceTypes.AddRange(deviceTypes);
+
                 context.SaveChanges();
             }
         }

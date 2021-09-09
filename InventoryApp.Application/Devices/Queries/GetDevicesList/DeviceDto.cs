@@ -11,6 +11,7 @@ namespace InventoryApp.Application.Devices.Queries.GetDevicesList
         public string Name { get; set; }
         public string Model { get; set; }
         public string Manufacturer { get; set; }
+        public string SerialNumber { get; set; }
         public string Type { get; set; }
 
         public EmployeeDto CurrentUser { get; set; }

@@ -31,6 +31,7 @@ namespace InventoryApp.WebApi
                 {
                     policy.WithOrigins(
                         "https://pnrsu-server.incomsystem.ru:8080",
+                        "https://opnrdiso002.incomsystem.ru:8080",
                         "https://192.168.110.17:8080")
                     .AllowAnyMethod()
                     .AllowAnyHeader();
@@ -44,7 +45,8 @@ namespace InventoryApp.WebApi
             })
                 .AddJwtBearer("Bearer", options =>
                 {
-                    options.Authority = "https://pnrsu-server.incomsystem.ru:10001";
+                    options.Authority = "https://opnrdiso002.incomsystem.ru:10001";
+                    //options.Authority = "https://pnrsu-server.incomsystem.ru:10001";
                     options.Audience = "InventoryAPI";
                     options.RequireHttpsMetadata = true;
                     options.TokenValidationParameters.RoleClaimType = "inventoryapp_role";

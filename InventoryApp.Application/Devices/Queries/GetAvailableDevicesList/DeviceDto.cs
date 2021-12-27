@@ -7,6 +7,7 @@ namespace InventoryApp.Application.Devices.Queries.GetAvailableDevicesList
     public class DeviceDto : IMapWith<Device>
     {
         public int Id { get; set; }
+        public int? Year { get; set; }
         public string Name { get; set; }
         public string Model { get; set; }
         public string Manufacturer { get; set; }

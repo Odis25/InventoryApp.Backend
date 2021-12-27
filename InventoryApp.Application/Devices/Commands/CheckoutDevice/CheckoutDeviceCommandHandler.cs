@@ -24,11 +24,9 @@ namespace InventoryApp.Application.Devices.Commands.CheckoutDevice
             if (checkout != null)
             {
                 checkout.CheckedOut = DateTime.Now;
+                checkout.Item.Status = Domain.Enums.Status.Available;
+                await _dbContext.SaveChangesAsync(cancellationToken);
             }
-
-            checkout.Item.Status = Domain.Enums.Status.Available;
-
-            await _dbContext.SaveChangesAsync(cancellationToken);
 
             return Unit.Value;
         }
